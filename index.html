@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robux Order Tracker | Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #7B5AFF;
+      --primary-dark: #5D3BFF;
+      --secondary: #00E5FF;
+      --dark: #1A1A2E;
+      --light: #F8F9FF;
+      --success: #2ECC71;
+      --warning: #FF9F43;
+      --error: #FF4757;
+      --gray: #7F8C8D;
+      --card-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #F8F9FF 0%, #E6E9FF 100%);
+      color: var(--dark);
+      min-height: 100vh;
+      padding: 1rem;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 1rem;
+    }
+    
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      box-shadow: 0 5px 15px rgba(123, 90, 255, 0.3);
+    }
+    
+    .logo i {
+      color: white;
+      font-size: 2.5rem;
+    }
+    
+    h1 {
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+      font-size: 1.8rem;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .subtitle {
+      color: var(--gray);
+      font-weight: 400;
+      font-size: 0.95rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    .tracker-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      transition: var(--transition);
+    }
+    
+    .tracker-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card-header {
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 1.2rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .card-header i {
+      font-size: 1.3rem;
+      margin-right: 0.8rem;
+    }
+    
+    .card-header h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+    }
+    
+    .input-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--dark);
+      font-size: 0.9rem;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      border: 2px solid #e0e3ff;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      background-color: #f8f9ff;
+    }
+    
+    .input-group input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(123, 90, 255, 0.2);
+      background-color: white;
+    }
+    
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      top: 3.1rem;
+      color: var(--primary);
+      font-size: 1rem;
+    }
+    
+    .btn {
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(123, 90, 255, 0.3);
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(123, 90, 255, 0.4);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .btn i {
+      margin-right: 0.5rem;
+    }
+    
+    .result-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+      padding: 1.5rem;
+      display: none;
+      animation: fadeIn 0.5s ease;
+      margin-top: 1.5rem;
+    }
+    
+    .result-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #f1f3ff;
+    }
+    
+    .result-header h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    
+    .status-container {
+      margin-bottom: 1.5rem;
+    }
+    
+    .status-badge {
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .status-badge i {
+      margin-right: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .status-description {
+      font-size: 0.9rem;
+      color: var(--gray);
+      padding-left: 1.8rem;
+    }
+    
+    .status-received {
+      background: rgba(46, 204, 113, 0.1);
+      color: var(--success);
+    }
+    
+    .status-processing {
+      background: rgba(255, 159, 67, 0.1);
+      color: var(--warning);
+    }
+    
+    .status-pending {
+      background: rgba(255, 71, 87, 0.1);
+      color: var(--error);
+    }
+    
+    .status-completed {
+      background: rgba(123, 90, 255, 0.1);
+      color: var(--primary);
+    }
+    
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .detail-label {
+      font-weight: 500;
+      color: var(--gray);
+      font-size: 0.85rem;
+      margin-bottom: 0.3rem;
+    }
+    
+    .detail-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--dark);
+      word-break: break-word;
+    }
+    
+    .admin-notes {
+      background: #F8F9FF;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      border-left: 4px solid var(--primary);
+    }
+    
+    .admin-notes-title {
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      color: var(--dark);
+      font-size: 0.95rem;
+    }
+    
+    .admin-notes-title i {
+      margin-right: 0.5rem;
+      color: var(--primary);
+    }
+    
+    .admin-notes-content {
+      font-size: 0.9rem;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .not-found {
+      text-align: center;
+      padding: 2rem;
+      color: var(--error);
+      font-weight: 500;
+      display: none;
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+      margin-top: 1.5rem;
+    }
+    
+    .not-found i {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--error);
+    }
+    
+    .not-found p {
+      font-size: 0.95rem;
+    }
+    
+    .not-found .btn-retry {
+      margin-top: 1rem;
+      background: var(--error);
+      width: auto;
+      padding: 0.7rem 1.5rem;
+      display: inline-flex;
+    }
+    
+    .loader {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+      margin-top: 1.5rem;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #f1f3ff;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    
+    .loader p {
+      font-size: 0.95rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @media (min-width: 480px) {
+      .detail-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 768px) {
+      body {
+        padding: 2rem;
+      }
+      
+      .header {
+        margin-bottom: 3rem;
+        padding: 1.5rem;
+      }
+      
+      .logo {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 1.5rem;
+      }
+      
+      .logo i {
+        font-size: 3rem;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+        margin-bottom: 0.8rem;
+      }
+      
+      .subtitle {
+        font-size: 1rem;
+      }
+      
+      .card-header {
+        padding: 1.5rem;
+      }
+      
+      .card-header i {
+        font-size: 1.5rem;
+      }
+      
+      .card-header h2 {
+        font-size: 1.5rem;
+      }
+      
+      .card-body {
+        padding: 2rem;
+      }
+      
+      .result-card {
+        padding: 2rem;
+      }
+      
+      .result-header h2 {
+        font-size: 1.5rem;
+      }
+      
+      .status-badge {
+        font-size: 0.9rem;
+        padding: 0.7rem 1.2rem;
+      }
+      
+      .detail-label {
+        font-size: 0.9rem;
+      }
+      
+      .detail-value {
+        font-size: 1rem;
+      }
+      
+      .admin-notes-title {
+        font-size: 1rem;
+      }
+      
+      .admin-notes-content {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        <i class="fas fa-gem"></i>
+      </div>
+      <h1>Robux Order Tracker</h1>
+      <p class="subtitle">Lacak status pesanan Robux Anda dengan mudah dan cepat</p>
+    </div>
+    
+    <div class="tracker-card">
+      <div class="card-header">
+        <i class="fas fa-search"></i>
+        <h2>Cari Pesanan</h2>
+      </div>
+      <div class="card-body">
+        <div class="input-group">
+          <label for="invoiceInput">Nomor Invoice</label>
+          <i class="fas fa-receipt input-icon"></i>
+          <input type="text" id="invoiceInput" placeholder="Contoh: ROBX-123456">
+        </div>
+        <button class="btn" onclick="cekStatus()">
+          <i class="fas fa-search"></i> Lacak Pesanan
+        </button>
+      </div>
+    </div>
+    
+    <div class="loader" id="loader">
+      <div class="spinner"></div>
+      <p>Memeriksa status pesanan...</p>
+    </div>
+    
+    <div class="not-found" id="notFound">
+      <i class="fas fa-exclamation-circle"></i>
+      <p id="errorMessage">Nomor invoice tidak ditemukan</p>
+      <button class="btn btn-retry" onclick="cekStatus()">
+        <i class="fas fa-sync-alt"></i> Coba Lagi
+      </button>
+    </div>
+    
+    <div class="result-card" id="result">
+      <div class="result-header">
+        <h2>Detail Pesanan</h2>
+      </div>
+      
+      <div class="status-container">
+        <div class="status-badge" id="statusBadge">
+          <i class="fas fa-check-circle"></i> Orderan Diterima
+        </div>
+        <div class="status-description" id="statusDescription">
+          Admin telah menerima orderan kamu, tunggu sesuai antrean.
+        </div>
+      </div>
+      
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">Nomor Invoice</span>
+          <span class="detail-value" id="invoiceNumber">-</span>
+        </div>
+        
+        <div class="detail-item">
+          <span class="detail-label">Nama Pemesan</span>
+          <span class="detail-value" id="customerName">-</span>
+        </div>
+        
+        <div class="detail-item">
+          <span class="detail-label">Username Roblox</span>
+          <span class="detail-value" id="robloxUsername">-</span>
+        </div>
+        
+        <div class="detail-item">
+          <span class="detail-label">Jenis Robux</span>
+          <span class="detail-value" id="robuxType">-</span>
+        </div>
+        
+        <div class="detail-item">
+          <span class="detail-label">Jumlah Robux</span>
+          <span class="detail-value" id="robuxAmount">-</span>
+        </div>
+        
+        <div class="detail-item">
+          <span class="detail-label">Status Pembayaran</span>
+          <span class="detail-value" id="paymentStatus">-</span>
+        </div>
+        
+        <div class="detail-item">
+          <span class="detail-label">Tanggal Order</span>
+          <span class="detail-value" id="orderDate">-</span>
+        </div>
+      </div>
+      
+      <div class="admin-notes" id="adminNotesContainer">
+        <div class="admin-notes-title">
+          <i class="fas fa-comment-dots"></i>
+          <span>Catatan Admin</span>
+        </div>
+        <div class="admin-notes-content" id="adminNotesContent">
+          Tidak ada catatan admin
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sheetURL = 'https://opensheet.elk.sh/12Jg1ZGXlEHj7QtyBpVYWpWiJfTE-7v4t3DFQib1UH2c/Sheet1';
+    
+    const statusConfig = {
+      "Orderan Diterima": {
+        class: "status-received",
+        icon: "fas fa-check-circle",
+        description: "Admin telah menerima orderan kamu, tunggu sesuai antrean."
+      },
+      "Orderan Diterima oleh Admin": {
+        class: "status-received",
+        icon: "fas fa-check-circle",
+        description: "Admin telah menerima orderan kamu, tunggu sesuai antrean."
+      },
+      "Diproses": {
+        class: "status-processing",
+        icon: "fas fa-cog",
+        description: "Proses pengisian Robux sedang berlangsung."
+      },
+      "Pending": {
+        class: "status-pending",
+        icon: "fas fa-clock",
+        description: "Proses akan selesai dalam waktu 3–5 hari."
+      },
+      "Selesai": {
+        class: "status-completed",
+        icon: "fas fa-check-double",
+        description: "Robux telah diterima, terima kasih sudah memesan!"
+      },
+      "Proses": {
+        class: "status-processing",
+        icon: "fas fa-cog",
+        description: "Pesanan sedang dalam proses pengerjaan."
+      },
+      "Dalam Antrian": {
+        class: "status-received",
+        icon: "fas fa-list-ol",
+        description: "Pesanan kamu ada dalam antrian, mohon menunggu."
+      },
+      "Gagal": {
+        class: "status-pending",
+        icon: "fas fa-times-circle",
+        description: "Terjadi masalah dengan pesanan, silakan hubungi admin."
+      },
+      "Dibatalkan": {
+        class: "status-pending",
+        icon: "fas fa-ban",
+        description: "Pesanan telah dibatalkan."
+      }
+    };
+    
+    async function cekStatus() {
+      const invoice = document.getElementById('invoiceInput').value.trim();
+      const resultDiv = document.getElementById('result');
+      const notFoundDiv = document.getElementById('notFound');
+      const loader = document.getElementById('loader');
+      const adminNotesContainer = document.getElementById('adminNotesContainer');
+      
+      // Reset UI
+      resultDiv.style.display = 'none';
+      notFoundDiv.style.display = 'none';
+      loader.style.display = 'none';
+      adminNotesContainer.style.display = 'block';
+      
+      if (!invoice) {
+        showError('Masukkan nomor invoice terlebih dahulu');
+        return;
+      }
+      
+      // Show loader
+      loader.style.display = 'block';
+      
+      try {
+        const res = await fetch(sheetURL);
+        const data = await res.json();
+        const order = data.find(row => row["Nomor Invoice"] === invoice);
+        
+        // Hide loader
+        loader.style.display = 'none';
+        
+        if (!order) {
+          showError('Nomor invoice tidak ditemukan');
+          return;
+        }
+        
+        // Update UI with order data
+        displayOrder(order);
+        
+      } catch (error) {
+        loader.style.display = 'none';
+        showError('Terjadi kesalahan saat mengambil data');
+        console.error(error);
+      }
+    }
+    
+    function displayOrder(order) {
+      const resultDiv = document.getElementById('result');
+      const status = order["Status Pesanan"] || "Orderan Diterima";
+      const config = statusConfig[status] || statusConfig["Orderan Diterima"];
+      
+      // Update status badge
+      const statusBadge = document.getElementById('statusBadge');
+      const statusDescription = document.getElementById('statusDescription');
+      statusBadge.className = 'status-badge ' + config.class;
+      statusBadge.innerHTML = `<i class="${config.icon}"></i> ${status}`;
+      statusDescription.textContent = config.description;
+      
+      // Update order details
+      document.getElementById('invoiceNumber').textContent = order["Nomor Invoice"] || '-';
+      document.getElementById('customerName').textContent = order["Nama Pemesan"] || '-';
+      document.getElementById('robloxUsername').textContent = order["Username Roblox"] || '-';
+      document.getElementById('robuxType').textContent = order["Jenis Robux"] || '-';
+      document.getElementById('robuxAmount').textContent = order["Jumlah Robux"] || '-';
+      document.getElementById('paymentStatus').textContent = order["Status Pembayaran"] || '-';
+      document.getElementById('orderDate').textContent = order["Tanggal Order"] || '-';
+      
+      // Update admin notes
+      const adminNotes = order["Catatan Admin"];
+      const adminNotesContent = document.getElementById('adminNotesContent');
+      const adminNotesContainer = document.getElementById('adminNotesContainer');
+      
+      if (adminNotes && adminNotes.trim() !== '') {
+        adminNotesContent.textContent = adminNotes;
+      } else {
+        adminNotesContainer.style.display = 'none';
+      }
+      
+      // Show result
+      resultDiv.style.display = 'block';
+    }
+    
+    function showError(message) {
+      const notFoundDiv = document.getElementById('notFound');
+      const errorMessage = document.getElementById('errorMessage');
+      
+      errorMessage.textContent = message;
+      notFoundDiv.style.display = 'block';
+    }
+    
+    // Allow searching by pressing Enter
+    document.getElementById('invoiceInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        cekStatus();
+      }
+    });
+  </script>
+</body>
+  </html>
