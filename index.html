@@ -36,11 +36,14 @@
       min-height: 100vh;
       padding: 1rem;
       line-height: 1.6;
+      display: flex;
+      flex-direction: column;
     }
     
     .container {
       max-width: 800px;
       margin: 0 auto;
+      flex: 1;
     }
     
     .header {
@@ -367,6 +370,30 @@
       font-weight: 500;
     }
     
+    .footer {
+      text-align: center;
+      padding: 1.5rem;
+      color: var(--gray);
+      font-size: 0.85rem;
+      margin-top: 2rem;
+    }
+    
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    .footer a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+    
+    .copyright {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+    }
+    
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -456,6 +483,10 @@
       .admin-notes-content {
         font-size: 0.95rem;
       }
+      
+      .footer {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -466,7 +497,7 @@
         <i class="fas fa-gem"></i>
       </div>
       <h1>Robux Order Tracker</h1>
-      <p class="subtitle">Lacak status pesanan Robux Anda dengan mudah dan cepat</p>
+      <p class="subtitle">Lacak status pesanan Robux Anda dengan mudah dan cepat. Milik Robuxnesia</p>
     </div>
     
     <div class="tracker-card">
@@ -561,6 +592,11 @@
       </div>
     </div>
   </div>
+
+  <footer class="footer">
+    <p>Butuh bantuan? <a href="https://wa.me/message/GVNIR62NFLEEG1">Hubungi Tim Support</a></p>
+    <p class="copyright">© 2025 Robuxnesia. All rights reserved.</p>
+  </footer>
 
   <script>
     const sheetURL = 'https://opensheet.elk.sh/12Jg1ZGXlEHj7QtyBpVYWpWiJfTE-7v4t3DFQib1UH2c/Sheet1';
@@ -674,7 +710,7 @@
       document.getElementById('customerName').textContent = order["Nama Pemesan"] || '-';
       document.getElementById('robloxUsername').textContent = order["Username Roblox"] || '-';
       document.getElementById('robuxType').textContent = order["Jenis Robux"] || '-';
-      document.getElementById('robuxAmount').textContent = order["Jumlah Robux"] || '-';
+      document.getElementById('robuxAmount').textContent = order["Jumlah Robux"] ? `${order["Jumlah Robux"]} Robux` : '-';
       document.getElementById('paymentStatus').textContent = order["Status Pembayaran"] || '-';
       document.getElementById('orderDate').textContent = order["Tanggal Order"] || '-';
       
